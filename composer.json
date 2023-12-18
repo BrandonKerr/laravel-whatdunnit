@@ -1,0 +1,17 @@
+{
+    "name": "brandon/laravel-whatdunnit",
+    "description": "A small auditing package to track how an Eloquent model was created or updated",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Brandon\\LaravelWhatdunnit\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.1",
+        "illuminate/support": "^10.0",
+        "illuminate/database": "^10.0"
+    }
+}
