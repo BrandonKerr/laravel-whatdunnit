@@ -7,22 +7,6 @@ use Illuminate\Support\ServiceProvider;
 class WhatdunnitServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any package services.
-     */
-    public function boot(): void
-    {
-        $this->publishes([
-            __DIR__.'/../config/whatdunnit.php' => config_path('whatdunnit.php'),
-        ]);
-
-        $this->publishes([
-            __DIR__ . '/../database/migrations/whatdunnit.stub' => database_path(
-                sprintf('migrations/%s_create_whatdunnit_table.php', date('Y_m_d_His'))
-            ),
-        ], 'migrations');
-    }
-
-    /**
      * Register any application services.
      */
     public function register(): void
@@ -30,5 +14,27 @@ class WhatdunnitServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/../config/whatdunnit.php', 'whatdunnit'
         );
+    }
+
+    /**
+     * Bootstrap any package services.
+     */
+    public function boot(): void
+    {
+        $this->publish();
+
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+    }
+
+    protected function publish(): void
+    {
+        // only publish when necessary
+        if (! $this->app->runningInConsole() || ! function_exists('config_path')) {
+            return;
+        }
+
+        $this->publishes([
+            __DIR__.'/../config/whatdunnit.php' => config_path('whatdunnit.php'),
+        ]);
     }
 }
